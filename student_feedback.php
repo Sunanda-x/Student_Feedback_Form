@@ -25,7 +25,7 @@
 <label>Semester</label>
 <select name="semester" required>
     <option value="">Select Semester</option>
-    <option>1st Year</option>
+    <option>1st Semester</option>
     <option>3rd Semester</option>
     <option>4th Semester</option>
     <option>5th Semester</option>
