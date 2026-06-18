@@ -9,21 +9,22 @@ if(!isset($_SESSION['admin'])) {
 include 'db.php';
 
 // Default query
-$query = "SELECT DISTINCT * FROM feedback";
+$query = "SELECT * FROM feedback";
 
 // Search by roll number
 if(isset($_GET['roll_number']) && !empty($_GET['roll_number'])) {
     $roll = $_GET['roll_number'];
-    $query = "SELECT DISTINCT * FROM feedback WHERE roll_number='$roll'";
+    $query = "SELECT * FROM feedback WHERE roll_number='$roll'";
 }
 
 // Filter by period
 if(isset($_GET['period']) && !empty($_GET['period'])) {
     $period = $_GET['period'];
-    $query = "SELECT DISTINCT * FROM feedback WHERE feedback_period='$period'";
+    $query = "SELECT * FROM feedback WHERE feedback_period='$period'";
 }
 
 $result = $conn->query($query);
+$serial = 1;
 ?>
 
 <!DOCTYPE html>
@@ -33,15 +34,19 @@ $result = $conn->query($query);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="container">
 
     <h1>Principal Dashboard</h1>
+
     <a href="analytics.php">Analytics Dashboard</a>
     &nbsp;&nbsp;&nbsp;
     <a href="logout.php">Logout</a>
+
     <br><br>
 
     <h2>Search By Roll Number</h2>
+
     <form method="GET">
         <input type="text" name="roll_number" placeholder="Enter Roll Number">
         <button type="submit">Search</button>
@@ -49,7 +54,8 @@ $result = $conn->query($query);
 
     <br>
 
-    <h2>Filter</h2>
+    <h2>Filter By Period</h2>
+
     <form method="GET">
         <select name="period">
             <option value="">All</option>
@@ -58,16 +64,19 @@ $result = $conn->query($query);
             <option>Jul-Sep</option>
             <option>Oct-Dec</option>
         </select>
+
         <button type="submit">Filter</button>
     </form>
 
     <br>
 
     <table border="1" cellpadding="8" cellspacing="0">
+
         <tr>
-            <th>ID</th>
+            <th>S.No</th>
             <th>Course</th>
             <th>Branch</th>
+            <th>Semester</th>
             <th>Roll No</th>
             <th>Period</th>
             <th>Teaching</th>
@@ -78,16 +87,16 @@ $result = $conn->query($query);
             <th>Cleanliness</th>
             <th>Placement</th>
             <th>Comments</th>
-            <th>Submission_date</th>
+            <th>Date</th>
         </tr>
 
-        <?php
-        while($row = $result->fetch_assoc()) {
-        ?>
+        <?php while($row = $result->fetch_assoc()) { ?>
+
         <tr>
-            <td><?php echo $row['id']; ?></td>
+            <td><?php echo $serial++; ?></td>
             <td><?php echo $row['course_name']; ?></td>
             <td><?php echo $row['branch_name']; ?></td>
+            <td><?php echo $row['semester']; ?></td>
             <td><?php echo $row['roll_number']; ?></td>
             <td><?php echo $row['feedback_period']; ?></td>
             <td><?php echo $row['teaching_quality']; ?></td>
@@ -100,10 +109,12 @@ $result = $conn->query($query);
             <td><?php echo $row['comments']; ?></td>
             <td><?php echo $row['submission_date']; ?></td>
         </tr>
-        <?php
-        }
-        ?>
+
+        <?php } ?>
+
     </table>
+
 </div>
+
 </body>
 </html>
