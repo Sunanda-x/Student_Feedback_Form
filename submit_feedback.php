@@ -2,9 +2,9 @@
 
 include 'db.php';
 
+$course_name=$_POST['course_name'];
 $branch_name = $_POST['branch_name'];
 $semester = $_POST['semester'];
-$subject_name = $_POST['subject_name'];
 $roll_number = $_POST['roll_number'];
 $feedback_period = $_POST['feedback_period'];
 
@@ -29,10 +29,10 @@ if($result->num_rows > 0)
     die("Feedback already submitted for this quarter.");
 }
 
-$sql = "INSERT INTO feedback(
+$sql="INSERT INTO feedback(
+course_name,
 branch_name,
 semester,
-subject_name,
 roll_number,
 feedback_period,
 teaching_quality,
@@ -45,9 +45,9 @@ placement_support,
 comments
 )
 VALUES(
+'$course_name',
 '$branch_name',
 '$semester',
-'$subject_name',
 '$roll_number',
 '$feedback_period',
 '$teaching_quality',
